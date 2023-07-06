@@ -1,6 +1,8 @@
 require 'sinatra'
 require_relative 'lib/bspeww'
 
+set :logging, true
+
 bspeww = Bspeww.new
 
 get '/read' do
