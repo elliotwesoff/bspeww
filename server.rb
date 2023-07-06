@@ -2,6 +2,7 @@ require 'sinatra'
 require_relative 'lib/bspeww'
 
 set :logging, true
+set :environment, :development
 
 bspeww = Bspeww.new
 
