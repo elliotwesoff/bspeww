@@ -10,10 +10,14 @@ node_callback() {
 
 mkdir -p ~/.bspeww
 
+echo subscribing to bspwm node_add...
+
 bspc subscribe node_add | while read line
 do
   node_callback "$line"
 done &
+
+echo subscribing to bspwm node_remove...
 
 bspc subscribe node_remove | while read line
 do
