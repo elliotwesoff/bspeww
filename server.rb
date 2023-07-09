@@ -11,6 +11,15 @@ get '/read' do
   200
 end
 
+get '/write' do
+  bspeww.write
+  200
+end
+
+get '/ping' do
+  [200, 'pong']
+end
+
 get '/desktop_names' do
   [200, bspeww.desktop_names.join(' ')]
 end
