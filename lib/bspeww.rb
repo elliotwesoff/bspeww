@@ -1,6 +1,4 @@
 require 'json'
-require 'byebug'
-
 
 # class to parse and bspwm state data. mainly to extract
 # desktop names and their current open window names.
