@@ -16,7 +16,7 @@ pkill --echo --full "^bspc\s+subscribe\s+desktop_focus"
 ruby ~/code/bspeww/server.rb -p 3100 &> ~/.bspeww/server.log & disown
 
 # dump current bspwm state
-bspc wm -d > ~/.bspeww/bspwm-state.json
+# bspc wm -d > ~/.bspeww/bspwm-state.json
 
 # wait for sinatra server to come online
 while [ ! $(curl --silent http://localhost:3100/ping) ]
@@ -25,7 +25,11 @@ do
 done
 
 # read and parse the current bspwm window states
-curl http://localhost:3100/read
+curl \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data $(bspc wm -d) \
+  http://localhost:3100/receive
 
 # write window states to disk for eww listeners
 curl http://localhost:3100/write

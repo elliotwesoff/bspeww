@@ -18,11 +18,11 @@ class Bspeww
   end
 
   def read
-    contents = File.read(File.expand_path(BSPWM_DUMP_FILE))
-    contents_json = JSON.parse(contents)
-    desktops = contents_json['monitors'][0]['desktops'] # TODO
-    desktops.each { |d| traverse_and_set(d) }
-    @desktop_names = desktops.map { |d| d['name'] }
+    process_bspc_data(JSON.parse(File.read(File.expand_path(BSPWM_DUMP_FILE))))
+  end
+
+  def receive(bspc_data)
+    process_bspc_data(bspc_data)
   end
 
   def write
@@ -37,6 +37,12 @@ class Bspeww
   end
 
   private
+
+  def process_bspc_data(bspc_data)
+    desktops = bspc_data['monitors'][0]['desktops'] # TODO
+    desktops.each { |d| traverse_and_set(d) }
+    @desktop_names = desktops.map { |d| d['name'] }
+  end
 
   def traverse_and_set(desktop)
     @desktop_window_names[desktop['name']] = traverse(desktop['root'])

@@ -4,12 +4,18 @@
 
 node_callback() {
   echo $1 >> ~/.bspeww/node-change.log
-  bspc wm -d > ~/.bspeww/bspwm-state.json
-  curl http://localhost:3100/read
+ 
+  curl \
+    --header "Content-Type: application/json" \
+    --request POST \
+    --data $(bspc wm -d) \
+    http://localhost:3100/receive
+
   curl http://localhost:3100/write
 }
 
 desktop_callback() {
+  # parse the currently selected desktop node from wmtrl -d and write to disk.
   wmctrl -d | grep -F '*' | rev | cut -d ' ' -f 1 | rev >> ~/.bspeww/desktops/selected
 }
 
