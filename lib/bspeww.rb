@@ -3,7 +3,7 @@ require 'json'
 # class to parse and bspwm state data. mainly to extract
 # desktop names and their current open window names.
 class Bspeww
-  BSPEWW_FOLDER = '~/.bspeww'.freeze
+  BSPEWW_FOLDER = '~/tmp/bspeww'.freeze
   DESKTOPS_FOLDER = "#{BSPEWW_FOLDER}/desktops".freeze
   BSPWM_DUMP_FILE = "#{BSPEWW_FOLDER}/bspwm-state.json".freeze
 

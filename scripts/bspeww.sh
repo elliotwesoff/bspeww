@@ -13,10 +13,7 @@ pkill --echo --full "^bspc\s+subscribe\s+desktop_focus"
 # start sinatra server. sinatra outputs to stderr by default,
 # redirect stderr to a log file and send the process to the
 # background.
-ruby ~/code/bspeww/server.rb -p 3100 &> ~/.bspeww/server.log & disown
-
-# dump current bspwm state
-# bspc wm -d > ~/.bspeww/bspwm-state.json
+ruby ~/code/bspeww/server.rb -p 3100 &> ~/tmp/bspeww/server.log & disown
 
 # wait for sinatra server to come online
 while [ ! $(curl --silent http://localhost:3100/ping) ]

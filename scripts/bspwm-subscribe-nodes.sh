@@ -3,7 +3,7 @@
 # bspwm-subscribe-nodes.sh
 
 node_callback() {
-  echo $1 >> ~/.bspeww/node-change.log
+  echo $1 >> ~/tmp/bspeww/node-change.log
  
   curl \
     --header "Content-Type: application/json" \
@@ -16,10 +16,10 @@ node_callback() {
 
 desktop_callback() {
   # parse the currently selected desktop node from wmtrl -d and write to disk.
-  wmctrl -d | grep -F '*' | rev | cut -d ' ' -f 1 | rev >> ~/.bspeww/desktops/selected
+  wmctrl -d | grep -F '*' | rev | cut -d ' ' -f 1 | rev >> ~/tmp/bspeww/desktops/selected
 }
 
-mkdir -p ~/.bspeww
+mkdir -p ~/tmp/bspeww/desktops
 
 bspc subscribe node_add node_remove node_transfer | while read line
 do

@@ -2,6 +2,7 @@
 #
 # bspeww-cleanup.sh
 
-echo Cleaning up bspeww desktop files...
+echo Cleaning up bspeww files...
 
-rm -fv ~/.bspeww/desktops/*
+rm -fv ~/tmp/bspeww/*
+rm -fv ~/tmp/bspeww/desktops/*
