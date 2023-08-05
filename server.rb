@@ -6,11 +6,6 @@ set :environment, :development
 
 bspeww = Bspeww.new
 
-get '/read' do
-  bspeww.read
-  200
-end
-
 get '/write' do
   bspeww.write
   200
