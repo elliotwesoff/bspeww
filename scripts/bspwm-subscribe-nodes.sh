@@ -21,12 +21,8 @@ desktop_callback() {
 
 mkdir -p ~/tmp/bspeww/desktops
 
-bspc subscribe node_add node_remove node_transfer | while read line
+bspc subscribe node_add node_remove node_transfer desktop_focus | while read line
 do
   node_callback "$line"
 done &
 
-bspc subscribe desktop_focus | while read line
-do
-  desktop_callback
-done &
