@@ -19,7 +19,7 @@ class Bspeww
 
   def write
     data_path = File.expand_path("#{DESKTOPS_FOLDER}/data")
-    File.write(data_path, "#{output_data}\n", mode: 'a+')
+    File.write(data_path, "#{@desktops.to_json}\n", mode: 'a+')
   end
 
   private
@@ -27,6 +27,7 @@ class Bspeww
   def process_bspc_data(bspc_data)
     desktops = bspc_data['monitors'][0]['desktops'] # TODO
     desktops.each { |d| traverse_and_set(d) }
+    @desktops.merge!(selected: selected_desktop)
   end
 
   def traverse_and_set(desktop)
@@ -51,9 +52,5 @@ class Bspeww
 
   def selected_desktop
     `wmctrl -d | grep -F '*' | rev | cut -d ' ' -f 1 | rev`.strip
-  end
-
-  def output_data
-    @desktops.merge(selected: selected_desktop).to_json
   end
 end
