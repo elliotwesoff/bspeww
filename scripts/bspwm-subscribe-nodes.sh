@@ -5,13 +5,10 @@
 node_callback() {
   echo $1 >> ~/tmp/bspeww/node-change.log
  
-  curl \
-    --header "Content-Type: application/json" \
-    --request POST \
-    --data $(bspc wm -d) \
-    http://localhost:3100/receive
-
-  curl http://localhost:3100/write
+  bspc wm -d \
+    | jq -c '.monitors[0].desktops[] | .root // {} | [.[] | recurse | select(.instanceName?) | .instanceName] | join("; ")' \
+    | jq -c -s . \
+    >> ~/tmp/bspeww/desktops/data
 }
 
 desktop_callback() {
@@ -21,8 +18,12 @@ desktop_callback() {
 
 mkdir -p ~/tmp/bspeww/desktops
 
-bspc subscribe node_add node_remove node_transfer desktop_focus | while read line
+bspc subscribe node_add node_remove node_transfer | while read line
 do
   node_callback "$line"
 done &
 
+bspc subscribe desktop_focus | while read line
+do
+  desktop_callback "$line"
+done &
